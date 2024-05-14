@@ -27,7 +27,7 @@ export function ChatHeader({
       )}
       {type === "conversation" && (
         <UserAvatar
-          src={imageUrl}
+          src={imageUrl || name}
           className="h-8 w-8 md:h-8 md:w-8 mr-2"
         />
       )}

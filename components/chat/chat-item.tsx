@@ -135,7 +135,9 @@ export function ChatItem({
           onClick={onMemberClick}
           className="cursor-pointer hover:drop-shadow-md transition"
         >
-          <UserAvatar src={member.profile.imageUrl} />
+          <UserAvatar
+            src={member.profile.imageUrl || member.profile.name}
+          />
         </div>
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2">

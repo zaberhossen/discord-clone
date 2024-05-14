@@ -1,13 +1,21 @@
 // import { authMiddleware } from "@clerk/nextjs";
 
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 // export default authMiddleware({
 //   publicRoutes: ["/api/uploadthing"]
 // });
 
 export function middleware(request: NextRequest) {
-  return;
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-url", request.url);
+  requestHeaders.set("x-pathname", request.nextUrl.pathname);
+  return NextResponse.next({
+    request: {
+      // Apply new request headers
+      headers: requestHeaders
+    }
+  });
 }
 
 export const config = {

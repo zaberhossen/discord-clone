@@ -22,6 +22,9 @@ interface Idata {
   username: string;
   password: string;
 }
+interface searchParams {
+  redirectUrl?: string;
+}
 
 const initialData: Idata = {
   username: "",
@@ -37,7 +40,11 @@ const schema = z
   })
   .passthrough();
 
-export default function SignIn() {
+export default function SignIn({
+  searchParams
+}: {
+  searchParams: searchParams;
+}) {
   const form = useForm({
     defaultValues: initialData,
     resolver: zodResolver(schema)
@@ -61,7 +68,9 @@ export default function SignIn() {
           if (res?.user) {
             AUTH.setUserData(JSON.stringify(res.user));
           }
-          window.location.href = "/";
+          window.location.href = searchParams?.redirectUrl
+            ? "/?redirectUrl=" + searchParams?.redirectUrl
+            : "/";
         }
       })
       .catch((error) => {

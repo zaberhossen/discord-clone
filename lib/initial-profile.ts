@@ -1,17 +1,13 @@
-import { currentUser, redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 import { db } from "@/lib/db";
-import { COOKIES_KEY } from "@/utils";
-import serverCookie from "@/utils/serverCookie";
 import { userData } from "./user-data";
 
 export const initialProfile = async () => {
-  // const user = await currentUser();
-
   const user = userData();
-  console.log(user?.first_name, user.email, "user--->");
-  if (!user) return redirect("/sign-in");
+
+  console.log(user, "user=======>");
+  if (!user?.email) return redirect("/sign-in");
 
   const profile = await db.profile.findUnique({
     where: {
@@ -33,8 +29,6 @@ export const initialProfile = async () => {
       email: user.email
     }
   });
-
-  console.log(newProfile, "newProfile--->");
 
   return newProfile;
 };

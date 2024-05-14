@@ -1,9 +1,8 @@
-import React from "react";
-import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
+import { headers } from "next/headers";
 
 interface InviteCodPageProps {
   params: {
@@ -14,9 +13,11 @@ interface InviteCodPageProps {
 export default async function InviteCodPage({
   params: { inviteCode }
 }: InviteCodPageProps) {
+  const headersList = headers();
+  const redirectUrl = headersList.get("x-url");
   const profile = await currentProfile();
 
-  if (!profile) return redirect("/sign-in");
+  if (!profile) return redirect("/sign-in?redirectUrl=" + redirectUrl);
 
   if (!inviteCode) return redirect("/");
 

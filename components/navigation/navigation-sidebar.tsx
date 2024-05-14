@@ -10,6 +10,8 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { NavigationItem } from "@/components/navigation/navigation-item";
 import { ModeToggle } from "@/components/mode-toggle";
+import { UserAvatar } from "../user-avatar";
+import { UserMenu } from "../user-menu";
 
 export async function NavigationSidebar() {
   const profile = await currentProfile();
@@ -51,6 +53,14 @@ export async function NavigationSidebar() {
             }
           }}
         /> */}
+        <UserMenu
+          trigger={
+            <UserAvatar
+              src={profile.imageUrl || profile.name}
+              className="h-10 w-10 cursor-pointer"
+            />
+          }
+        />
       </div>
     </div>
   );
