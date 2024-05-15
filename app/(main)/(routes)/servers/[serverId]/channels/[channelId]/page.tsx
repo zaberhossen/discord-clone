@@ -2,6 +2,7 @@ import React from "react";
 import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { ChannelType } from "@prisma/client";
+import { cookies } from "next/headers";
 
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -20,6 +21,9 @@ interface ChannelIdPageProps {
 export default async function ChannelIdPage({
   params: { channelId, serverId }
 }: ChannelIdPageProps) {
+   const cookieStore = cookies();
+   const user = cookieStore.get("user");
+   const userData = JSON.parse(user?.value || "");
   const profile = await currentProfile();
 
   if (!profile) return redirect("/sign-in");
@@ -69,10 +73,20 @@ export default async function ChannelIdPage({
         </>
       )}
       {channel.type === ChannelType.AUDIO && (
-        <MediaRoom chatId={channel.id} video={false} audio={true} />
+        <MediaRoom
+          chatId={channel.id}
+          video={false}
+          audio={true}
+          user={userData}
+        />
       )}
       {channel.type === ChannelType.VIDEO && (
-        <MediaRoom chatId={channel.id} video={true} audio={true} />
+        <MediaRoom
+          chatId={channel.id}
+          video={true}
+          audio={true}
+          user={userData}
+        />
       )}
     </div>
   );

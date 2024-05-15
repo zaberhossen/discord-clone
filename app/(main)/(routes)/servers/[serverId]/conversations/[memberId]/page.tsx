@@ -1,6 +1,6 @@
 import React from "react";
-import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -24,6 +24,10 @@ export default async function MemberIdPage({
   params: { memberId, serverId },
   searchParams: { video }
 }: MemberIdPageProps) {
+  const cookieStore = cookies();
+  const user = cookieStore.get("user");
+  const userData = JSON.parse(user?.value || "");
+
   const profile = await currentProfile();
 
   if (!profile) return redirect("/sign-in");
@@ -61,12 +65,7 @@ export default async function MemberIdPage({
         type="conversation"
       />
       {video && (
-        <MediaRoom
-          chatId={conversation.id}
-          profile={profile}
-          video
-          audio
-        />
+        <MediaRoom chatId={conversation.id} user={userData} video audio />
       )}
       {!video && (
         <>

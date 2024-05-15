@@ -5,46 +5,25 @@ import "@livekit/components-styles";
 import { LiveKitRoom, VideoConference } from "@livekit/components-react";
 import { useUser } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
-import { userData } from "@/lib/user-data";
-import { AUTH } from "@/app/api/service/auth";
+import { IUser } from "@/lib/user-data";
 
 interface MediaRoomProps {
   chatId: string;
   video: boolean;
   audio: boolean;
-  profile: profile;
+  user: IUser;
 }
 
-interface profile {
-  id: string;
-  userId: string;
-  name: string;
-  imageUrl: string;
-  email: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export function MediaRoom({
-  chatId,
-  video,
-  audio,
-  profile
-}: MediaRoomProps) {
-  // const { user } = useUser();
-  const user = profile;
-
-  console.log(user, "userData==========>");
-
+export function MediaRoom({ chatId, video, audio, user }: MediaRoomProps) {
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    if (!profile?.name) return;
+    if (!user?.first_name) return;
 
     (async () => {
       try {
         const response = await fetch(
-          `/api/livekit?room=${chatId}&username=${user.name}`
+          `/api/livekit?room=${chatId}&username=${user.first_name}`
         );
         const data = await response.json();
         setToken(data.token);
@@ -52,7 +31,7 @@ export function MediaRoom({
         console.error(error);
       }
     })();
-  }, [user?.name, chatId]);
+  }, [user?.first_name, chatId]);
 
   if (token === "")
     return (
