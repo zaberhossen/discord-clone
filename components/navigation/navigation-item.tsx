@@ -13,7 +13,11 @@ interface NavigationItemProps {
   name: string;
 }
 
-export function NavigationItem({ id, imageUrl, name }: NavigationItemProps) {
+export function NavigationItem({
+  id,
+  imageUrl,
+  name
+}: NavigationItemProps) {
   const params = useParams();
   const router = useRouter();
 
@@ -23,7 +27,10 @@ export function NavigationItem({ id, imageUrl, name }: NavigationItemProps) {
 
   return (
     <ActionTooltip side="right" align="center" label={name}>
-      <button onClick={onClick} className="group relative flex items-center">
+      <button
+        onClick={onClick}
+        className="group relative flex items-center"
+      >
         <div
           className={cn(
             "absolute left-0 bg-primary rounded-full transition-all w-[4px]",
@@ -38,7 +45,7 @@ export function NavigationItem({ id, imageUrl, name }: NavigationItemProps) {
               "bg-primary/10 text-primary rounded-[16px]"
           )}
         >
-          <Image fill src={imageUrl} alt="Channel" />
+          <Image fill src={imageUrl} alt="Channel" sizes="48px" />
         </div>
       </button>
     </ActionTooltip>
