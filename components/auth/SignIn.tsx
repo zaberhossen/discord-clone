@@ -96,7 +96,7 @@ export default function SignIn({
                     <Input
                       disabled={isLoading}
                       placeholder="Enter your email"
-                      className="bg-zinc-300/50 border-0 focus-visible: ring-0 text-black focus-visible:ring-offset-0"
+                      className="bg-zinc-300/50 border-0 focus-visible: ring-0 text-white focus-visible:ring-offset-0"
                       {...field}
                     />
                   </FormControl>
@@ -105,7 +105,7 @@ export default function SignIn({
               )}
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-6">
             <FormField
               control={form.control}
               name="password"
@@ -116,9 +116,10 @@ export default function SignIn({
                   </FormLabel>
                   <FormControl>
                     <Input
+                      type="password"
                       disabled={isLoading}
                       placeholder="Enter your password"
-                      className="bg-zinc-300/50 border-0 focus-visible: ring-0 text-black focus-visible:ring-offset-0"
+                      className="bg-zinc-300/50 border-0 focus-visible: ring-0 text-white focus-visible:ring-offset-0"
                       {...field}
                     />
                   </FormControl>

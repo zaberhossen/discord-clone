@@ -111,6 +111,7 @@ export function MembersModal() {
               className="flex items-center gap-x-2 mb-6"
             >
               <UserAvatar
+                className="text-white"
                 src={member.profile.imageUrl || member.profile.name}
               />
               <div className="flex flex-col gap-y-1">

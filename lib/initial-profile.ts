@@ -6,7 +6,6 @@ import { userData } from "./user-data";
 export const initialProfile = async () => {
   const user = userData();
 
-  console.log(user, "user=======>");
   if (!user?.email) return redirect("/sign-in");
 
   const profile = await db.profile.findUnique({

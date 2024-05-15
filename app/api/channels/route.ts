@@ -3,12 +3,10 @@ import { MemberRole } from "@prisma/client";
 
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { headers } from "next/headers";
 
 export async function POST(req: Request) {
-  console.log(headers(), "headers===>");
   try {
-    const profile = {};
+    const profile = await currentProfile();
     const { name, type } = await req.json();
     const { searchParams } = new URL(req.url);
 
@@ -44,8 +42,6 @@ export async function POST(req: Request) {
         }
       }
     });
-
-    console.log(server, "server------> channel");
 
     return NextResponse.json(server);
   } catch (error) {

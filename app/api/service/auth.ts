@@ -28,7 +28,7 @@ const getRefreshTokenExpired = () => {
 const getRefreshToken = () => {
   return Cookies.get(COOKIES_KEY.REFRESH_TOKEN);
 };
-const getUserId = () => {
+const getUserData = () => {
   return Cookies.get(COOKIES_KEY.USER_DATA);
 };
 const cleanTokens = () => {
@@ -56,7 +56,7 @@ export const AUTH = {
   setAccessToken,
   getAccessToken,
   setRefreshToken,
-  getUserId,
+  getUserData,
   setUserData,
   getRefreshTokenExpired,
   getRefreshToken,
