@@ -34,3 +34,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+codeStyleConfig.xml
+discord-clone.iml
+modules.xml
+Project.xml
+Project_Default.xml
+vcs.xml
+.idea
