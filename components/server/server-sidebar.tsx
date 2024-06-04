@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { ServerSection } from "@/components/server/server-section";
 import { ServerChannel } from "@/components/server/server-channel";
 import { ServerMember } from "@/components/server/server-member";
+import { getOrCreateConversation } from "@/lib/conversation";
 
 const iconMap = {
   [ChannelType.TEXT]: <Hash className="mr-2 h-4 w-4" />,
@@ -75,6 +76,14 @@ export async function ServerSidebar({ serverId }: { serverId: string }) {
   const role = server.members.find(
     (member) => member.profileId === profile.id
   )?.role;
+
+  const getConversationID = async ({ memberId }: { memberId: string }) => {
+    const conversation = await getOrCreateConversation(
+      profile.id,
+      memberId
+    );
+    return conversation?.id;
+  };
 
   return (
     <div className="flex flex-col h-full text-primary w-full dark:bg-[#2b2d31] bg-[#f2f3f5]">

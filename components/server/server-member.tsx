@@ -6,6 +6,8 @@ import { useParams, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { UserAvatar } from "@/components/user-avatar";
+import { useEffect } from "react";
+import { useSocket } from "../providers/socket-provider";
 
 interface ServerMemberProps {
   member: Member & { profile: Profile };
@@ -23,6 +25,7 @@ const roleIconMap = {
 };
 
 export const ServerMember = ({ member, server }: ServerMemberProps) => {
+  const { socket } = useSocket();
   const params = useParams();
   const router = useRouter();
 
@@ -30,6 +33,17 @@ export const ServerMember = ({ member, server }: ServerMemberProps) => {
 
   const onClick = () =>
     router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on(
+        `chat:e1d20bc8-194e-4768-95ff-b0c40ba476c1:messages`,
+        (message: any) => {
+          console.log(message);
+        }
+      );
+    }
+  }, [socket]);
 
   return (
     <button
@@ -45,7 +59,7 @@ export const ServerMember = ({ member, server }: ServerMemberProps) => {
       />
       <p
         className={cn(
-          "font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition",
+          "truncate max-w-[130px] font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition",
           params?.memberId === member.id &&
             "text-primary dark:text-zinc-200 dark:group-hover:text-white"
         )}

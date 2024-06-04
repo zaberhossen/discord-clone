@@ -13,7 +13,7 @@ interface ChatHeaderProps {
   imageUrl?: string;
 }
 
-export function ChatHeader({
+export async function ChatHeader({
   name,
   serverId,
   type,
